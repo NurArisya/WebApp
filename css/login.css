@@ -59,4 +59,33 @@ input[type=email], input[type=password] {
     text-decoration: underline;
 }
 
+/*Toggle Password */
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #bcbcbc;
+    border-radius: 8px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.password-container i {
+    position: absolute;
+    right: 15px;
+    bottom: 50%;
+    color: #888;
+}
+
+.togglePassword {
+    cursor: pointer;
+}
+
 
