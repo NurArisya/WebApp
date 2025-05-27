@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navlogo a {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #000;
+    text-decoration: none;
+}
+
+.navlogo a:hover {
+    color: purple;
+}
+
+.navlinks {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navlinks li {
+    position: relative;
+}
+
+.navlinks a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    display: block;
+}
+
+.navlinks a:hover {
+    color: white;
+    background-color: #bf83f8;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    min-width: 160px;
+    z-index: 10;
+}
+
+.dropdown-menu li {
+    width: 100%;
+    list-style: none;
+}
+
+.dropdown-menu li a {
+    padding: 10px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #bf83f8;
+}
+
+.loginbtn {
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.loginbtn:hover {
+    background-color: #bf83f8;
+}
