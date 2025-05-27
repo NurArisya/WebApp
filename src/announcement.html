@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/announcement.css">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Announcement</title>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="img/logo.jpg" alt="logo">
+                </span>
+
+                <div class="text header-text">
+                    <span class="name">MMU</span>
+                    <span class="profession">SpotLit</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+                <!--<li class="search-box">
+                        <i class='bx bx-search icon'></i>
+                        <input type="search" placeholder="Search...">
+                </li>-->
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bxs-home icon'></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bxs-pencil icon'></i>
+                            <span class="text nav-text">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bxs-group icon'></i>
+                            <span class="text nav-text">Talent Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bxs-calendar-alt icon'></i>
+                            <span class="text nav-text">Event Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bxs-star icon'></i>
+                            <span class="text nav-text">Feedback Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-link active">
+                        <a href="#">
+                            <i class='bx bxs-megaphone icon'></i>
+                            <span class="text nav-text">Announcement Management</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="slider">
+            <div class="slides">
+                <img src="img/slideshow.png" alt="Event #1">
+                <img src="img/slideshow1.png" alt="Event #2">
+            </div>
+            <button class="prev" onclick="prevSlide()">
+                <i class='bx bxs-chevron-left'></i>
+            </button>
+            <button class="next" onclick="nextSlide()">
+                <i class='bx bxs-chevron-right'></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="js/announcement.js"></script>
+</body>
+
+</html>
