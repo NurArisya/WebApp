@@ -17,7 +17,8 @@ $result = $conn->query($select1)
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--boxicons-->
     <link rel="stylesheet" href="../css/adminStyling.css">
     <link rel="stylesheet" href="../css/announce.css">
-    <title>Announcement</title>
+    <link rel="icon" type="image/png" href="../img/spotlit-tab-logo.png">
+    <title>MMU TALENT</title>
 </head>
 
 <body>
