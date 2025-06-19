@@ -147,7 +147,8 @@ header .image-text .header-text {
 .content {
     flex-grow: 1;
     display: flex;
-    justify-content: row;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     background: #eae9f7;
     padding-left: 70px;
