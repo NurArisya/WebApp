@@ -1,33 +1,48 @@
-const talents = [
-      { name: 'Talent Name', education: 'Education of talent', bio: 'Talent biography.' },
-      { name: 'Talent Name', education: 'Education of talent', bio: 'Talent biography.' },
-      { name: 'Talent Name', education: 'Education of talent', bio: 'Talent biography.' },
-      { name: 'Talent Name', education: 'Education of talent', bio: 'Talent biography.' },
-      { name: 'Talent Name', education: 'Education of talent', bio: 'Talent biography.' },
-      { name: 'Talent Name', education: 'Education of talent', bio: 'Talent biography.' },
-    ];
+function createCard(talent) {
+  const resumeLink = talent.resume ? `<a href="${talent.resume}" target="_blank">View Resume</a>` : '';
+  return `
+    <div class="card">
+      <img src="${talent.profile_pic}" alt="profile"/>
+      <h3>${talent.name}</h3>
+      <p>${talent.education}</p>
+      <p>${talent.bio}</p>
+      <p>${talent.phone}</p>
+      ${resumeLink}
+    </div>
+  `;
+}
 
-    function createCard(talent) {
-      return `
-        <div class="card">
-          <img src="https://img.icons8.com/ios/50/image--v1.png" alt="placeholder"/>
-          <h3>${talent.name}</h3>
-          <p>${talent.education}</p>
-          <p>${talent.bio}</p>
-          <a href="#">See Info</a>
-        </div>
-      `;
-    }
 
-    function renderCards(data) {
-      const grid = document.getElementById('talentGrid');
-      grid.innerHTML = data.map(createCard).join('');
-    }
+function renderCards(data) {
+  const grid = document.getElementById('talentGrid');
+  grid.innerHTML = data.map(createCard).join('');
+}
 
-    document.getElementById('searchInput').addEventListener('input', function() {
-      const query = this.value.toLowerCase();
-      const filtered = talents.filter(t => t.name.toLowerCase().includes(query));
-      renderCards(filtered);
-    });
+let allTalents = [];
 
-    renderCards(talents);
+function applyFilters() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const genre = document.getElementById('genreSelect').value;
+
+  const filtered = allTalents.filter(talent => {
+    const matchesName = talent.name.toLowerCase().includes(query);
+    const matchesGenre = genre === '' || talent.bio.toLowerCase().includes(genre.toLowerCase());
+    return matchesName && matchesGenre;
+  });
+
+  renderCards(filtered);
+}
+
+// Fetch talents from PHP
+fetch('talent.php?api=getTalents')
+  .then(response => response.json())
+  .then(talents => {
+    allTalents = talents;
+    renderCards(allTalents);
+
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('genreSelect').addEventListener('change', applyFilters);
+  })
+  .catch(error => {
+    console.error('Error fetching talents:', error);
+  });
