@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2025 at 09:06 PM
+-- Generation Time: Jun 19, 2025 at 09:55 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -177,17 +177,21 @@ CREATE TABLE `gallery` (
   `media_title` varchar(200) DEFAULT NULL,
   `media_desc` varchar(500) DEFAULT NULL,
   `media_type` varchar(100) DEFAULT NULL,
-  `media_date` date DEFAULT NULL
+  `media_date` date DEFAULT NULL,
+  `gallery_pic` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gallery`
 --
 
-INSERT INTO `gallery` (`galleryID`, `media_title`, `media_desc`, `media_type`, `media_date`) VALUES
-(1, 'Talent Fair Recap', 'Photos from Talent Fair 2025 event.', 'image', '2025-08-02'),
-(2, 'Art Expo Highlights', 'Exhibition overview and artworks.', 'video', '2025-07-16'),
-(3, 'Code Fest Teaser', 'Preview of the upcoming coding competition.', 'image', '2025-09-01');
+INSERT INTO `gallery` (`galleryID`, `media_title`, `media_desc`, `media_type`, `media_date`, `gallery_pic`) VALUES
+(1, 'Singing Competition 2024', 'Highlights from the annual singing competition.', 'Image', '2024-03-12', 'http://localhost/WebApp-main/image/mic.png'),
+(2, 'Hackathon 2024', 'Students coding innovative solutions in 24 hours.', 'Image', '2024-04-05', 'http://localhost/WebApp-main/image/hackathon.png'),
+(3, 'Robotics Showdown', 'Robots battling it out in the arena.', 'Image', '2024-04-20', 'http://localhost/WebApp-main/image/robot.png'),
+(4, 'Acting Gala', 'Dramatic and comedic performances by students.', 'Image', '2024-05-03', 'http://localhost/WebApp-main/image/actingGala.png'),
+(5, 'Hackathon Winners', 'Award ceremony for top-performing hackathon teams.', 'Image', '2024-04-06', 'http://localhost/WebApp-main/image/hack2.png'),
+(6, 'Singing Finals', 'Finalists performing live on stage.', 'Image', '2024-03-13', 'http://localhost/WebApp-main/image/singing.png');
 
 -- --------------------------------------------------------
 
@@ -234,7 +238,7 @@ CREATE TABLE `talentprofile` (
 --
 
 INSERT INTO `talentprofile` (`talentID`, `userID`, `nickname`, `education`, `talent`, `resume_file_path`, `phone`, `gender`, `profile_pic`) VALUES
-(1, 3, 'CarolW', 'Bachelor of Computer Science', 'coding', 'CarolResume.pdf', '0171234567', 'female', 'carol.jpg');
+(1, 3, 'CarolW', 'Bachelor of Computer Science', 'coding', 'http://localhost/WebApp-main/uploads/CarolResume.pdf', '0171234567', 'female', 'http://localhost/WebApp-main/image/carol.jpg');
 
 -- --------------------------------------------------------
 
@@ -405,7 +409,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `galleryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `galleryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `report`
@@ -417,13 +421,13 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `talentprofile`
 --
 ALTER TABLE `talentprofile`
-  MODIFY `talentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `talentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
