@@ -1,5 +1,4 @@
 function createCard(talent) {
-  const resumeLink = talent.resume ? `<a href="${talent.resume}" target="_blank">View Resume</a>` : '';
   return `
     <div class="card">
       <img src="${talent.profile_pic}" alt="profile"/>
@@ -7,7 +6,7 @@ function createCard(talent) {
       <p>${talent.education}</p>
       <p>${talent.bio}</p>
       <p>${talent.phone}</p>
-      ${resumeLink}
+      <a href="../php/media.php" target="_blank">See Info</a>
     </div>
   `;
 }
