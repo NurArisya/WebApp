@@ -1,3 +1,10 @@
+<?php
+include 'db_conn.php';
+
+$sql = "SELECT * FROM event ORDER BY event_date ASC";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -20,7 +27,7 @@
             </div>
 
             <ul class="navlinks" id="nav-links">
-                <li><a href="#">Home</a></li>
+                <li><a href="../php/dashboard.php">Home</a></li>
                 <li><a href="../php/talent.php">Talent</a></li>
                 <li><a href="#">Events</a></li>
                 <li><a href="../php/gallery.php">Gallery</a></li>
@@ -45,9 +52,24 @@
         <div class="content">
             <div class="slider">
                 <div class="slides">
-                    <img src="slideshow.png" alt="Event #1">
-                    <img src="slideshow1.png" alt="Event #2">
+            <?php
+            mysqli_data_seek($result, 0);
+            while ($row = $result->fetch_assoc()) {
+            echo '
+            <div class="slide-box">
+                <img class="slide-image-top" src="' . htmlspecialchars($row['event_pic']) . '" alt="' . htmlspecialchars($row['event_title']) . '"/>
+                <div class="slide-caption-under">
+                    <h3>' . htmlspecialchars($row["event_title"]) . '</h3>
+                    <p>' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '</p>
                 </div>
+            </div>';
+        }
+
+            mysqli_data_seek($result, 0);
+            ?>
+        </div>
+
+
                 <button class="prev" onclick="prevSlide()">
                     <i class='bx bxs-chevron-left'></i>
                 </button>
@@ -57,59 +79,39 @@
             </div>
 
             <div class="event-container">
-                <h3 class=" "> </h3>
-                <div class="event">
-                    <div class="event-left">
-                        <div class="event-info">
-                            <div class="event-name"><b>Event Name</b></div>
-                            <div class="date-posted">24 May 2025</div>
+        <h3>Upcoming Events</h3>
+        <?php
+    
+        function limitSentences($text, $limit = 1) {
+            $sentences = preg_split('/(?<=[.?!])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+            return implode(' ', array_slice($sentences, 0, $limit));
+        }
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '
+                    <div class="event">
+                        <div class="event-left">
+                            <div class="event-info">
+                                <div class="event-name"><b>' . htmlspecialchars($row["event_title"]) . '</b></div>
+                                <div class="date-posted">' . htmlspecialchars($row["event_date"]) . '</div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="event-right">
-                        <div class="event-description">
-                            Content of the event.
+                        <div class="event-right">
+                            <div class="event-description">
+                                ' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '
+                            </div>
                         </div>
+                    </div>';
+                }
+            } else {
+                echo '<p>No events found.</p>';
+            }
 
-                    </div>
+            $conn->close();
+            ?>
+        </div>
 
-                </div>
-
-                <div class="event">
-                    <div class="event-left">
-                        <div class="event-info">
-                            <div class="event-name"><b>Event Name</b></div>
-                            <div class="date-posted">24 May 2025</div>
-                        </div>
-                    </div>
-
-                    <div class="event-right">
-                        <div class="event-description">
-                            Content of the event.
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="event">
-                    <div class="event-left">
-                        <div class="event-info">
-                            <div class="event-name"><b>Event Name</b></div>
-                            <div class="date-posted">24 May 2025</div>
-                        </div>
-                    </div>
-
-                    <div class="event-right">
-                        <div class="event-description">
-                            Content of the event.
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
 
         </div>
     </nav>
