@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2025 at 09:55 PM
+-- Generation Time: Jun 20, 2025 at 11:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -120,17 +120,18 @@ CREATE TABLE `event` (
   `adminID` int(11) NOT NULL,
   `event_title` varchar(200) DEFAULT NULL,
   `event_desc` varchar(500) DEFAULT NULL,
-  `event_date` date DEFAULT NULL
+  `event_date` date DEFAULT NULL,
+  `event_pic` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`eventID`, `adminID`, `event_title`, `event_desc`, `event_date`) VALUES
-(1, 1, 'Talent Fair 2025', 'Talent Fair 2025 is a dynamic event designed to uncover and promote emerging talents in music, dance, theater, and other performing arts. The objective of the event is to provide a platform for aspiring individuals to gain exposure, network with industry professionals, and receive constructive feedback. Attendees can participate in talent showcases, interactive workshops, and panel discussions hosted by experts. The expected outcome is to discover new talents for future collaborations and help p', '2025-08-01'),
-(2, 1, 'Art Expo 2025', 'Art Expo 2025 aims to bring together creative minds to celebrate visual arts, including painting, sculpture, graphic design, and digital illustration. The objective is to foster artistic expression and create an inclusive space for artists to present their work to the public. Featuring curated galleries, live art demonstrations, artist talks, and workshops, the expo encourages creative exchange between emerging artists and seasoned professionals. The expected outcome is to increase public apprec', '2025-07-15'),
-(3, 1, 'Code Fest 2025', 'Code Fest 2025 is a national coding competition that invites tech enthusiasts to demonstrate their programming, innovation, and problem-solving skills. The objective is to challenge participants with real-world scenarios in web development, AI, cybersecurity, and app design. This multi-track event includes hackathons, technical workshops, keynote sessions, and a job-matching zone with tech companies. The expected outcome is to promote digital skills, identify top-performing developers for potent', '2025-09-10');
+INSERT INTO `event` (`eventID`, `adminID`, `event_title`, `event_desc`, `event_date`, `event_pic`) VALUES
+(1, 1, 'Talent Fair 2025', 'Talent Fair 2025 is a dynamic event designed to uncover and promote emerging talents in music, dance, theater, and other performing arts. The objective of the event is to provide a platform for aspiring individuals to gain exposure, network with industry professionals, and receive constructive feedback. Attendees can participate in talent showcases, interactive workshops, and panel discussions hosted by experts. The expected outcome is to discover new talents for future collaborations and help p', '2025-08-01', 'http://localhost/WebApp-main/image/talentFair.png'),
+(2, 1, 'Art Expo 2025', 'Art Expo 2025 aims to bring together creative minds to celebrate visual arts, including painting, sculpture, graphic design, and digital illustration. The objective is to foster artistic expression and create an inclusive space for artists to present their work to the public. Featuring curated galleries, live art demonstrations, artist talks, and workshops, the expo encourages creative exchange between emerging artists and seasoned professionals. The expected outcome is to increase public apprec', '2025-07-15', 'http://localhost/WebApp-main/image/artExpo.png'),
+(3, 1, 'Code Fest 2025', 'Code Fest 2025 is a national coding competition that invites tech enthusiasts to demonstrate their programming, innovation, and problem-solving skills. The objective is to challenge participants with real-world scenarios in web development, AI, cybersecurity, and app design. This multi-track event includes hackathons, technical workshops, keynote sessions, and a job-matching zone with tech companies. The expected outcome is to promote digital skills, identify top-performing developers for potent', '2025-09-10', 'http://localhost/WebApp-main/image/codeFest.png');
 
 -- --------------------------------------------------------
 
@@ -421,7 +422,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `talentprofile`
 --
 ALTER TABLE `talentprofile`
-  MODIFY `talentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `talentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
