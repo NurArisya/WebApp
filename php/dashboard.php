@@ -1,8 +1,17 @@
 <?php
 include 'db_conn.php';
+$search = $_GET['search'] ?? '';
+$result = null;
 
-$sql = "SELECT * FROM event ORDER BY event_date ASC";
-$result = $conn->query($sql);
+if (!empty($search)) {
+    $stmt = $conn->prepare("SELECT * FROM event WHERE event_title LIKE CONCAT('%', ?, '%') OR event_desc LIKE CONCAT('%', ?, '%') ORDER BY event_date ASC");
+    $stmt->bind_param("ss", $search, $search);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $sql = "SELECT * FROM event ORDER BY event_date ASC";
+    $result = $conn->query($sql);
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,9 +40,9 @@ $result = $conn->query($sql);
                 <li><a href="../php/talent.php">Talent</a></li>
                 <li><a href="#">Events</a></li>
                 <li><a href="../php/gallery.php">Gallery</a></li>
-                <li><a href="#">Community Services</a></li>
+                <li><a href="../php/community.php">Community Services</a></li>
                 <li class="dropdown">
-                    <a href="#">About Us</a>
+                    <a href="../php/about.php">About Us</a>
                     <ul class="dropdown-menu">
                         <li><a href="#">FAQ</a></li>
                         <li><a href="../php/contact.php">Contact Us</a></li>
@@ -41,12 +50,13 @@ $result = $conn->query($sql);
                 </li>
 
             </ul>
-            <button type="submit" class="loginbtn">Log in</button>
+            <button type="submit" class="loginbtn" >Log in</button>
         </div>
-           <div class="search-bar">
-            <input type="text" placeholder="Search events..." />
-            <button type="button">Search</button>
-        </div>
+           <form class="search-bar" method="GET" action="dashboard.php">
+                <input type="text" name="search" placeholder="Search events..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                <button type="submit">Search</button>
+            </form>
+
 
 
         <div class="content">
