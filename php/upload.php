@@ -1,29 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- This modal is always loaded but hidden -->
+<div class="modal" id="mediaModal" style="display: none;">
+    <form class="modal-content" id="uploadForm">
+        <span class="close" id="closeMediaBtn">&times;</span>
+        <h2>Post Media</h2>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Talent Profile - MMU TALENT</title>
-    <link rel="stylesheet" href="../css/upload.css" />
-</head>
-
-<body>
-
-    <div class="upload">
         <div class="upload-section">
             <label for="input-file">Upload Image or Video</label>
-            <input type="file" accept="image/*,video/*" id="input-file">
+            <input type="file" accept="image/*,video/*" id="input-file" required>
             <div class="media-preview" id="media-preview"></div>
         </div>
-        <textarea id="description" placeholder="Write a caption..."></textarea>
-        <div class="media-preview" id="media-preview"></div>
 
+        <textarea id="description" placeholder="Write a caption..." required></textarea>
         <button class="post-button" type="submit">Post Content</button>
-    </div>
-
-
-    <script src="../js/upload.js"></script>
-</body>
-
-</html>
+    </form>
+</div>
