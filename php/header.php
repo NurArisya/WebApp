@@ -7,7 +7,7 @@
         </div>
 
         <ul class="navlinks" id="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="../php/dashboard.php">Home</a></li>
             <li><a href="../php/talent.php">Talent</a></li>
             <li><a href="#">Events</a></li>
             <li><a href="../php/gallery.php">Gallery</a></li>
