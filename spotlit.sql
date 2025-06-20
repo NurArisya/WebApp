@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2025 at 11:12 AM
+-- Generation Time: Jun 20, 2025 at 04:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -68,6 +68,29 @@ INSERT INTO `announcement` (`announcementID`, `adminID`, `ann_title`, `ann_descr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comment`
+--
+
+CREATE TABLE `comment` (
+  `commentID` int(11) NOT NULL,
+  `communityID` int(11) DEFAULT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `comment_text` text DEFAULT NULL,
+  `comment_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`commentID`, `communityID`, `userID`, `comment_text`, `comment_date`) VALUES
+(6, 2, 9, 'ok', '2025-06-20 20:33:36'),
+(7, 1, 9, 'yes pls', '2025-06-20 20:39:16'),
+(8, 3, 9, 'me', '2025-06-20 21:05:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `community`
 --
 
@@ -87,7 +110,8 @@ CREATE TABLE `community` (
 
 INSERT INTO `community` (`communityID`, `userID`, `community_title`, `community_content`, `community_date`, `comment_text`, `comment_date`) VALUES
 (1, 2, 'Photography Lovers', 'A group to share photography tips.', '2025-06-01', 'Great community!', '2025-06-02'),
-(2, 3, 'Theater Geeks', 'Discuss the latest plays and performances.', '2025-06-03', 'Loved the recent discussion.', '2025-06-04');
+(2, 3, 'Theater Geeks', 'Discuss the latest plays and performances.', '2025-06-03', 'Loved the recent discussion.', '2025-06-04'),
+(3, 9, 'I love arts', 'anyone can share something trendy?', '2025-06-20', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -239,7 +263,8 @@ CREATE TABLE `talentprofile` (
 --
 
 INSERT INTO `talentprofile` (`talentID`, `userID`, `nickname`, `education`, `talent`, `resume_file_path`, `phone`, `gender`, `profile_pic`) VALUES
-(1, 3, 'CarolW', 'Bachelor of Computer Science', 'coding', 'http://localhost/WebApp-main/uploads/CarolResume.pdf', '0171234567', 'female', 'http://localhost/WebApp-main/image/carol.jpg');
+(1, 3, 'CarolW', 'Bachelor of Computer Science', 'coding', 'http://localhost/WebApp-main/uploads/CarolResume.pdf', '0171234567', 'female', 'http://localhost/WebApp-main/image/carol.jpg'),
+(11, 10, 'Tom', 'Bachelor in Cinematic Arts', 'theater', 'https://en.wikipedia.org/wiki/Tom_Cruise', '0128473645', 'male', 'http://localhost/WebApp-main/image/tom.png');
 
 -- --------------------------------------------------------
 
@@ -263,7 +288,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`userID`, `first_name`, `last_name`, `email`, `password`, `role`) VALUES
 (1, 'Arisya', 'Yasak', 'arista@outlook.com', 'Adm1n#2024', 'admin'),
 (2, 'Bob', 'Johnson', 'bob@gmail.com', 'S3cur3!Pwd', 'customer'),
-(3, 'Carol', 'Williams', 'carol@student.mmu.edu.my', 'P@ssword1 ', 'talent');
+(3, 'Carol', 'Williams', 'carol@student.mmu.edu.my', 'P@ssword1 ', 'talent'),
+(9, 'Surrey', 'Wong', '123@gmail.com', 'qwertyui123!', 'customer'),
+(10, 'Tom', 'Cruise', 'tom@gmail.com', 'qwertyui123!', 'talent');
 
 --
 -- Triggers `users`
@@ -298,6 +325,14 @@ ALTER TABLE `adminprofile`
 ALTER TABLE `announcement`
   ADD PRIMARY KEY (`announcementID`),
   ADD KEY `adminID` (`adminID`);
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`commentID`),
+  ADD KEY `communityID` (`communityID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `community`
@@ -377,10 +412,16 @@ ALTER TABLE `announcement`
   MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `community`
 --
 ALTER TABLE `community`
-  MODIFY `communityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `communityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customerprofile`
@@ -422,13 +463,13 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `talentprofile`
 --
 ALTER TABLE `talentprofile`
-  MODIFY `talentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `talentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -445,6 +486,13 @@ ALTER TABLE `adminprofile`
 --
 ALTER TABLE `announcement`
   ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`adminID`) REFERENCES `adminprofile` (`adminID`);
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`communityID`) REFERENCES `community` (`communityID`),
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
 -- Constraints for table `community`
