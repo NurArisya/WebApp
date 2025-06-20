@@ -11,7 +11,7 @@
             <li><a href="../php/talent.php">Talent</a></li>
             <li><a href="#">Events</a></li>
             <li><a href="../php/gallery.php">Gallery</a></li>
-            <li><a href="#">Community Services</a></li>
+            <li><a href="../php/community.php">Community Services</a></li>
             <li class="dropdown">
                 <a href="../php/about.php">About Us</a>
                 <ul class="dropdown-menu">
@@ -20,7 +20,7 @@
                 </ul>
             </li>
         </ul>
-        <button type="submit" class="loginbtn">Log in</button>
+        <a href="../src/register.php"><button type="submit" class="loginbtn" >Log in</button></a>
     </div>
 </nav>
 </header>
