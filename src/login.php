@@ -1,8 +1,6 @@
 <?php
-
-include('./php/db_conn.php');
-
 session_start();
+include('../php/db_conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
@@ -14,25 +12,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $row=mysqli_fetch_array($result);
 
-    if($row["role"]=="admin") {
-        header("location: admin/admin.php");
-    }
+    if ($row) {
+    $_SESSION['userID'] = $row['userID']; 
 
-    elseif($row["role"]=="talent") {
-        header("location: php/dashboard.php");
+    if ($row["role"] == "admin") {
+        header("location: ../admin/admin.php");
+       
+    } elseif ($row["role"] == "talent" ) {
+        header("location: ../php/dashboard.php");
     }
-
-    elseif($row["role"]=="customer") {
-        header("location: php/dashboard.php");
+    elseif ($row["role"] == "customer" ) {
+        header("location: ../php/dashboard.php");
     }
-
-    else{
-        echo "email or password incorrect";
+    } else {
+        echo "Email or password incorrect";
     }
-
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" type="image/png" href="../img/spotlit-tab-logo.png">
     <title>MMU TALENT</title>
 
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="../css/login.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
