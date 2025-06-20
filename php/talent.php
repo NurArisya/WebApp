@@ -1,12 +1,31 @@
 <?php
-include 'db_conn.php';
-include 'header.php';
+if (isset($_GET['api']) && $_GET['api'] === 'getTalents') {
+    header('Content-Type: application/json');
+    include 'db_conn.php';
 
-$sql = "SELECT tp.nickname AS name, tp.education, tp.talent, u.first_name, u.last_name, tp.profile_pic, tp.resume_file_path, tp.phone 
-        FROM talentprofile tp 
-        JOIN users u ON tp.userID = u.userID";
+    $sql = "SELECT tp.nickname AS name, tp.education, tp.talent, u.first_name, u.last_name, tp.profile_pic, tp.resume_file_path, tp.phone 
+            FROM talentprofile tp 
+            JOIN users u ON tp.userID = u.userID";
 
-$result = $conn->query($sql);
+    $result = $conn->query($sql);
+
+    $talents = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $talents[] = [
+            'profile_pic' => $row['profile_pic'],
+            'name' => $row['name'],
+            'education' => $row['education'],
+            'bio' => "Specialized in " . $row['talent'] . ". Full name: " . $row['first_name'] . " " . $row['last_name'],
+            'phone' => $row['phone'],
+            'resume' => $row['resume_file_path']
+        ];
+    }
+
+    echo json_encode($talents);
+    $conn->close();
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +39,9 @@ $result = $conn->query($sql);
 </head>
 
 <body>
+<?php include 'header.php'; ?>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search Talent" />
+    <input type="text" id="searchInput" placeholder="Search Talent"/>
     <select id="genreSelect">
       <option value="">Genre</option>
       <option value="music">music</option>
@@ -32,27 +52,11 @@ $result = $conn->query($sql);
   </div>
 
   <div class="card-grid" id="talentGrid">
-    <?php
-    if ($result && $result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-        echo '
-        <div class="card">
-          <img src="' . $row['profile_pic'] . '" alt="profile" />
-          <h3>' . htmlspecialchars($row['name']) . '</h3>
-          <p>' . htmlspecialchars($row['education']) . '</p>
-          <p>Specialized in ' . $row['talent'] .'</p>
-          <p> Full name: ' . $row['first_name'] . ' ' . $row['last_name'] . '</p>
-          <p>'.htmlspecialchars($row['phone']).'</p>
-          <a href="' . $row['resume_file_path'] . '" target="_blank">View Resume</a>
-        </div>';
-      }
-    } else {
-      echo "<p>No talents found.</p>";
-    }
-    $conn->close();
-    ?>
+    <!-- Cards inserted by talent.js -->
   </div>
 
   <script src="../js/talent.js"></script>
+  
+  
 </body>
 </html>
