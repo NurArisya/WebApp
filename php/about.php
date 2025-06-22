@@ -26,7 +26,7 @@
        Join us and be part of a creative, dynamic, and diverse community.
     </p>
 
-    <p>Still curious? Visit our <a href="#">FAQ</a> or <a href="../php/contact.php">Contact Us</a> page.</p>
+    <p>Still curious? Visit our <a href="../php/faq.php">FAQ</a> or <a href="../php/contact.php">Contact Us</a> page.</p>
 
     <h2>Group Members</h2>
 
@@ -56,9 +56,9 @@
     </tr>
     <tr>
       <th>Photo</th>
-      <td><img src="../image/elon.png" alt="Alysha Naili"/></td>
-      <td><img src="../image/elon.png" alt="Nur Arisya"/></td>
-      <td><img src="../image/elon.png" alt="Nur Ayu"/></td>
+      <td><img src="../image/alysha.png" alt="Alysha Naili"/></td>
+      <td><img src="../image/arisya.jpg" alt="Nur Arisya"/></td>
+      <td><img src="../image/ayu.jpg" alt="Nur Ayu"/></td>
       <td><img src="../image/waiyeecrop.jpg" alt="Wai Yee"/></td>
     </tr>
     <tr>
