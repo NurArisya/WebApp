@@ -1,29 +1,41 @@
 <?php
 include('../php/db_conn.php');
 
+session_start();
 
+$title = "";
+$desc = "";
+$date = "";
 
-// Handle form submission (when save button clicked)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
-    $id = $_POST['announcementID'];
-    $title = $_POST['eventTitle'];
-    $desc = $_POST['eventDescription'];
-    $date = $_POST['eventDate'];
+$errorMessage = "";
+$successMessage = "";
 
-    $stmt = $conn->prepare("UPDATE announcement SET ann_title = ?, ann_description = ?, event_date = ? WHERE announcementID = ?");
-    $stmt->bind_param("sssi", $title, $desc, $date, $id);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $title = $_POST["ann_title"];
+    $desc = $_POST["ann_description"];
+    $date =  $_POST["event_date"];
 
-    if ($stmt->execute()) {
-        echo "<script>alert('Announcement updated successfully');</script>";
-    } else {
-        echo "<script>alert('Error: " . $stmt->error . "');</script>";
-    }
+    do {
+        if (empty($title) || empty($desc) || empty($date)) {
+            $errorMessage = "All the fields are required";
+            break;
+        }
+
+        //add new announcement to database
+        $insert1 = "INSERT INTO announcement (ann_title, ann_description, event_date) VALUES ('$title', '$desc', '$date')";
+        $result = $conn->query($insert1);
+
+        $title = "";
+        $desc = "";
+        $date = "";
+
+        $successMessage = "Announcement created correctly";
+    } while (false);
 }
 
 $select1 = "SELECT * FROM announcement";
-$result = $conn->query($select1)
+$result = $conn->query($select1);
 ?>
-
 
 
 <!DOCTYPE html>
@@ -36,7 +48,6 @@ $result = $conn->query($select1)
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--boxicons-->
     <link rel="stylesheet" href="./adminStyling.css">
     <link rel="stylesheet" href="./announce.css">
-    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 
     <title>Announcement</title>
 </head>
@@ -117,9 +128,6 @@ $result = $conn->query($select1)
 
         <div class="edit-event-modal" id="editModal">
             <form name="editEventForm" id="editEventForm" method="POST" action="">
-
-            <input type="hidden" name="announcementID" id="announcementID">
-
                 <div class="modal-header">
                     <h2>Edit Announcement</h2>
                     <span class="close-btn" id="closeEditBtn">&times;</span>
@@ -128,23 +136,24 @@ $result = $conn->query($select1)
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="eventTitle">Announcement Title</label>
-                        <input type="text" name="eventTitle" id="eventTitle" placeholder="Enter event title" required>
+                        <input type="text" name="ann_title" id="ann_title" placeholder="Enter event title" value="<?php echo $title; ?>" required>
                     </div>
 
                     <div class="form-group">
                         <label for="eventDescription">Announcement Description</label>
-                        <textarea name="eventDescription" id="eventDescription" placeholder="Describe the event" required></textarea>
+                        <textarea name="ann_description" id="ann_description" placeholder="Describe the event" value="<?php echo $desc; ?>" required></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="eventDate">Event Date</label>
-                        <input type="date" name="eventDate" id="eventDate" required>
+                        <input type="date" name="event_date" id="event_date" value="<?php echo $date; ?>" required>
                     </div>
                 </div>
 
                 <div class="form-actions" style="margin-top: 20px;">
                     <button type="submit" name="save" class="save-btn">Save</button>
                 </div>
+
             </form>
         </div>
 
@@ -172,13 +181,13 @@ $result = $conn->query($select1)
                             echo "<td>" . $row['event_date'] . "</td>";
                             echo "<td>
                             <i class='bx bxs-edit edit-icon'></i>
-                            <i class='bx bxs-trash delete-icon'></i>
+                            <i class='bx bxs-trash delete-icon' data-id='" . $row['announcementID'] . "'></i>
                             <i class='bx bxs-save save-icon' style='display: none;'></i>
                             </td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='6'>No announcement found</td></tr>";
+                        echo "<tr><td colspan='6'>No feedback found</td></tr>";
                     }
                     ?>
                 </tbody>
