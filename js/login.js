@@ -1,13 +1,5 @@
 // login.js
 
-/*function togglePassword(icon) {
-    const input = icon.previousElementSibling;
-    const isPassword = input.type === "password";
-    input.type = isPassword ? "text" : "password";
-    icon.classList.toggle("fa-eye");
-    icon.classList.toggle("fa-eye-slash");
-}*/
-
 document.getElementById("togglePassword").addEventListener("click", function () {
     const passwordInput = document.getElementById("password");
     const icon = this;
@@ -26,9 +18,8 @@ document.getElementById("togglePassword").addEventListener("click", function () 
 
 
 function validateForm(event) {
-    event.preventDefault();
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
     let emailError = document.getElementById("emailError");
     let passwordError = document.getElementById("passwordError");
     let isValid = true;
@@ -39,13 +30,15 @@ function validateForm(event) {
     if (!email) {
         emailError.innerHTML = "Email is required!";
         isValid = false;
-    } else if (!password) {
-        passwordError.innerHTML = "Passwords is required!";
+    }
+
+    if (!password) {
+        passwordError.innerHTML = "Password is required!";
         isValid = false;
     }
-    if (isValid) {
-        window.location.href = "dashboard.html"; // Redirect to dashboard page
-        alert("You have successfully logged in!");
 
+    // Prevent form submission only if invalid
+    if (!isValid) {
+        event.preventDefault();
     }
 }
