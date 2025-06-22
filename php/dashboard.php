@@ -1,5 +1,8 @@
 <?php
 include 'db_conn.php';
+session_start();
+
+
 $search = $_GET['search'] ?? '';
 $result = null;
 
@@ -12,6 +15,8 @@ if (!empty($search)) {
     $sql = "SELECT * FROM event ORDER BY event_date ASC";
     $result = $conn->query($sql);
 }
+
+$loggedIn = isset($_SESSION['userID']);
 ?>
 
 <!DOCTYPE html>
@@ -44,14 +49,30 @@ if (!empty($search)) {
                 <li class="dropdown">
                     <a href="../php/about.php">About Us</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="../php/faq.php">FAQ</a></li>
                         <li><a href="../php/contact.php">Contact Us</a></li>
                     </ul>
                 </li>
 
             </ul>
-            <button type="submit" class="loginbtn" >Log in</button>
+            <?php if ($loggedIn): ?>
+        <!-- Logged-in User Dropdown -->
+        <ul class="navlinks">
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Menu ▼</a>
+            <ul class="dropdown-menu">
+              <li><a href="../php/talentProfile.php">Profile</a></li>
+              <li><a href="../php/media.php">Media</a></li>
+              <li><a href="../php/logout.php">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      <?php else: ?>
+        <!-- Guest User -->
+        <a href="../src/register.php"><button type="button" class="loginbtn">Log in</button></a>
+      <?php endif; ?>
         </div>
+    
            <form class="search-bar" method="GET" action="dashboard.php">
                 <input type="text" name="search" placeholder="Search events..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
                 <button type="submit">Search</button>
