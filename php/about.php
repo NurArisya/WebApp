@@ -6,7 +6,6 @@
   <title>About Us </title>
   <link rel="stylesheet" href="../css/dashboard.css">
   <link rel="stylesheet" href="../css/about.css">
-  <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 </head>
 <body>
 
@@ -28,7 +27,48 @@
     </p>
 
     <p>Still curious? Visit our <a href="#">FAQ</a> or <a href="../php/contact.php">Contact Us</a> page.</p>
+
+    <h2>Group Members</h2>
+
   </main>
+ 
+  <table>
+    <tr>
+      <th>Name</th>
+      <td>Alysha Naili binti Kamarulzaman</td>
+      <td>Nur Arisya binti Mohd Yasak</td>
+      <td>Nur Ayu Farisha binti Hamdan @ Hood</td>
+      <td>Wong Wai Yee</td>
+    </tr>
+    <tr>
+      <th>Student ID</th>
+      <td>1221303351</td>
+      <td>1221303288</td>
+      <td>1211101924</td>
+      <td>1221303660</td>
+    </tr>
+    <tr>
+      <th>Section</th>
+      <td>TC1L</td>
+      <td>TC1L</td>
+      <td>TC1L</td>
+      <td>TC1L</td>
+    </tr>
+    <tr>
+      <th>Photo</th>
+      <td><img src="../image/elon.png" alt="Alysha Naili"/></td>
+      <td><img src="../image/elon.png" alt="Nur Arisya"/></td>
+      <td><img src="../image/elon.png" alt="Nur Ayu"/></td>
+      <td><img src="../image/waiyeecrop.jpg" alt="Wai Yee"/></td>
+    </tr>
+    <tr>
+      <th>Contact</th>
+      <td><a href="mailto:1221303351@student.mmu.edu.my">1221303351@student.mmu.edu.my</a></td>
+      <td><a href="mailto:1221303288@student.mmu.edu.my">1221303288@student.mmu.edu.my</a></td>
+      <td><a href="mailto:1211101924@student.mmu.edu.my">1211101924@student.mmu.edu.my</a></td>
+      <td><a href="mailto:1221303660@student.mmu.edu.my">1221303660@student.mmu.edu.my</a></td>
+    </tr>
+  </table>
 
   <footer class="footer">
     &copy; <?php echo date("Y"); ?> MMU Spotlit. All rights reserved.
