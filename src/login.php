@@ -1,6 +1,6 @@
 <?php
-session_start();
 include('../php/db_conn.php');
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
@@ -13,7 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row=mysqli_fetch_array($result);
 
     if ($row) {
-    $_SESSION['userID'] = $row['userID']; 
+    $_SESSION['userID'] = $row['userID'];
+    $_SESSION['role'] = $row['role'];
+ 
 
     if ($row["role"] == "admin") {
         header("location: ../admin/admin.php");
@@ -36,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="../img/spotlit-tab-logo.png">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
     <title>MMU TALENT</title>
 
     <link rel="stylesheet" href="../css/login.css" />
