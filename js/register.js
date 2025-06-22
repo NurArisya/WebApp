@@ -4,6 +4,9 @@ function validatePassword() {
 
     let errorElement = document.getElementById("passwordError");
     let errorMatch = document.getElementById("confirmPasswordError");
+
+    let isTalentChecked = document.getElementById("isTalent").checked;
+
     let minlength = 8;
     let isValid = true;
 
@@ -38,5 +41,14 @@ function validatePassword() {
         isValid = false;
 
     }
+
+    if (!isTalentChecked) {
+        let proceed = confirm("You did not choose to register as a Talent. Continue as a regular user?");
+        if (!proceed) {
+            isValid = false;
+        }
+    }
+
     return isValid;
 }
+
