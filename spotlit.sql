@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2025 at 04:01 PM
+-- Generation Time: Jun 22, 2025 at 05:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -50,7 +50,6 @@ INSERT INTO `adminprofile` (`adminID`, `userID`, `responseID`, `profile_pic`, `p
 
 CREATE TABLE `announcement` (
   `announcementID` int(11) NOT NULL,
-  `adminID` int(11) NOT NULL,
   `ann_title` varchar(200) DEFAULT NULL,
   `ann_description` varchar(500) DEFAULT NULL,
   `event_date` date DEFAULT NULL
@@ -60,10 +59,10 @@ CREATE TABLE `announcement` (
 -- Dumping data for table `announcement`
 --
 
-INSERT INTO `announcement` (`announcementID`, `adminID`, `ann_title`, `ann_description`, `event_date`) VALUES
-(1, 1, 'Talent Fair', 'Join us for the annual talent showcase', '2025-08-01'),
-(2, 1, 'Art Expo', 'Display your artwork at the city expo', '2025-07-15'),
-(3, 1, 'Code Fest', 'Compete in our national coding challenge', '2025-09-10');
+INSERT INTO `announcement` (`announcementID`, `ann_title`, `ann_description`, `event_date`) VALUES
+(1, 'Talent Fair', 'Join us for the annual talent showcase', '2025-08-01'),
+(2, 'Art Expo', 'Display your artwork at the city expo', '2025-07-15'),
+(3, 'Code Fest', 'Compete in our national coding challenge', '2025-09-10');
 
 -- --------------------------------------------------------
 
@@ -86,7 +85,8 @@ CREATE TABLE `comment` (
 INSERT INTO `comment` (`commentID`, `communityID`, `userID`, `comment_text`, `comment_date`) VALUES
 (6, 2, 9, 'ok', '2025-06-20 20:33:36'),
 (7, 1, 9, 'yes pls', '2025-06-20 20:39:16'),
-(8, 3, 9, 'me', '2025-06-20 21:05:33');
+(8, 3, 9, 'me', '2025-06-20 21:05:33'),
+(9, 4, 10, 'yes, I am coming!', '2025-06-22 17:56:30');
 
 -- --------------------------------------------------------
 
@@ -111,7 +111,8 @@ CREATE TABLE `community` (
 INSERT INTO `community` (`communityID`, `userID`, `community_title`, `community_content`, `community_date`, `comment_text`, `comment_date`) VALUES
 (1, 2, 'Photography Lovers', 'A group to share photography tips.', '2025-06-01', 'Great community!', '2025-06-02'),
 (2, 3, 'Theater Geeks', 'Discuss the latest plays and performances.', '2025-06-03', 'Loved the recent discussion.', '2025-06-04'),
-(3, 9, 'I love arts', 'anyone can share something trendy?', '2025-06-20', NULL, NULL);
+(3, 9, 'I love arts', 'anyone can share something trendy?', '2025-06-20', NULL, NULL),
+(4, 9, 'TOM IS COMING', 'Everyone, I heard Tom is coming for a talk!', '2025-06-22', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -323,8 +324,7 @@ ALTER TABLE `adminprofile`
 -- Indexes for table `announcement`
 --
 ALTER TABLE `announcement`
-  ADD PRIMARY KEY (`announcementID`),
-  ADD KEY `adminID` (`adminID`);
+  ADD PRIMARY KEY (`announcementID`);
 
 --
 -- Indexes for table `comment`
@@ -415,13 +415,13 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `community`
 --
 ALTER TABLE `community`
-  MODIFY `communityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `communityID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customerprofile`
@@ -480,12 +480,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `adminprofile`
   ADD CONSTRAINT `adminprofile_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
-
---
--- Constraints for table `announcement`
---
-ALTER TABLE `announcement`
-  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`adminID`) REFERENCES `adminprofile` (`adminID`);
 
 --
 -- Constraints for table `comment`
