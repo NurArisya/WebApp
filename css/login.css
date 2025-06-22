@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-*
-{
+* {
     font-family: 'Poppins';
 }
 
@@ -26,7 +25,8 @@ label {
     box-shadow: 2px 2px 8px #0000001a;
 }
 
-input[type=email], input[type=password] {
+input[type=email],
+input[type=password] {
     width: 95%;
     padding: 10px;
     border: 1px solid #bcbcbc;
@@ -36,16 +36,20 @@ input[type=email], input[type=password] {
     font-size: 14px;
 }
 
-.button {
+.submit {
     width: 100%;
     padding: 14px;
-    background-color: #b9b4b4;
+    background-color: black;
     border: none;
     border-radius: 25px;
     font-weight: normal;
     font-size: 16px;
     color: #fff;
     cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #bcbcbc;
 }
 
 .signup-link {
@@ -57,6 +61,11 @@ input[type=email], input[type=password] {
 .signup-link a {
     color: #2861d3;
     text-decoration: underline;
+}
+
+#emailError,
+#passwordError {
+    font-size: 12px;
 }
 
 /*Toggle Password */
@@ -87,5 +96,3 @@ input[type=email], input[type=password] {
 .togglePassword {
     cursor: pointer;
 }
-
-
