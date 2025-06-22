@@ -1,8 +1,9 @@
 <?php
-include("../php/db_conn.php");
+include("../php/db_conn.php"); // adjust path if needed
 
-$sql = "SELECT * FROM announcement";
-$result = $conn->query($sql);
+$announcements = $conn->query("SELECT * FROM announcement");
+$events = $conn->query("SELECT * FROM event ORDER BY event_date ASC");
+
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@ $result = $conn->query($sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="./admin.css">
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -22,6 +23,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
+    <!--Navigation items-->
     <nav class="sidebar">
         <header>
             <div class="image-text">
@@ -89,11 +91,33 @@ $result = $conn->query($sql);
         </div>
     </nav>
 
-    <div class="content"> 
+    <div class="content"> <!--dashboard content-->
         <div class="slider">
             <div class="slides">
-                <img src="../image/slideshow.png" alt="Event #1">
-                <img src="../image/slideshow1.png" alt="Event #2">
+                <?php
+                function limitSentences($text, $limit = 1) {
+                    $sentences = preg_split('/(?<=[.?!])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+                    return implode(' ', array_slice($sentences, 0, $limit));
+                }
+
+                if ($events && $events->num_rows > 0) {
+                    while ($row = $events->fetch_assoc()) {
+                        // Optional fallback image if event_pic doesn't exist
+                        $imagePath = isset($row['event_pic']) ? htmlspecialchars($row['event_pic']) : '../image/default-event.jpg';
+
+                        echo '
+                        <div class="slide-box">
+                            <img class="slide-image-top" src="' . $imagePath . '" alt="' . htmlspecialchars($row['event_title']) . '"/>
+                            <div class="slide-caption-under">
+                                <h3>' . htmlspecialchars($row["event_title"]) . '</h3>
+                                <p>' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '</p>
+                            </div>
+                        </div>';
+                    }
+                } else {
+                    echo '<p>No upcoming events found.</p>';
+                }
+                ?>
             </div>
             <button class="prev" onclick="prevSlide()">
                 <i class='bx bxs-chevron-left'></i>
@@ -107,8 +131,9 @@ $result = $conn->query($sql);
                 <h3 class="announcement-title">Announcement</h3>
 
                 <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                if ($announcements && $announcements->num_rows > 0) {
+                while ($row = $announcements->fetch_assoc()) {
+
                         echo '<div class="event">';
                             echo '<div class="event-left">';
                                 echo '<div class="event-info">';
@@ -127,6 +152,61 @@ $result = $conn->query($sql);
                 }
                 ?>
             </div>
+        <!--- <div class="event-container">
+            <h3 class="announcement-title">Announcement</h3>
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-info">
+                        <div class="event-name">Tech Fair</div>
+                        <div class="date-posted">24 May 2025</div>
+                    </div>
+                </div>
+
+                <div class="event-right">
+                    <div class="event-description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus provident aliquam!
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-info">
+                        <div class="event-name">Tech Fair</div>
+                        <div class="date-posted">24 May 2025</div>
+                    </div>
+                </div>
+
+                <div class="event-right">
+                    <div class="event-description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus provident aliquam!
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-info">
+                        <div class="event-name">Tech Fair</div>
+                        <div class="date-posted">24 May 2025</div>
+                    </div>
+            
+                </div>
+
+                <div class="event-right">
+                    <div class="event-description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus provident aliquam!
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div> ----> 
 
     </div>
 
