@@ -1,56 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const logoutBtn = document.querySelector('.logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function () {
-            window.location.href = 'admin.html';
-        });
-    }
-
-    const trashIcons = document.querySelectorAll(".delete-icon");
-    trashIcons.forEach(icon => {
-        icon.addEventListener("click", function () {
-            const row = this.parentNode.parentNode;
-            row.remove();
-        });
-    });
-
     const editIcons = document.querySelectorAll(".edit-icon");
+    const saveIcons = document.querySelectorAll(".save-icon");
+
     editIcons.forEach(icon => {
         icon.addEventListener("click", function () {
-            const row = this.parentNode.parentNode;
+            const row = this.closest("tr");
             const cells = row.querySelectorAll("td");
-            cells.forEach((cell, index) => {
-                if (index !== cells.length - 1) {
-                    const input = document.createElement("input");
-                    input.value = cell.textContent;
-                    cell.textContent = "";
-                    cell.appendChild(input);
-                }
-            });
+
+            for (let i = 1; i <= 3; i++) {
+                const input = document.createElement("input");
+                input.value = cells[i].textContent;
+                cells[i].textContent = "";
+                cells[i].appendChild(input);
+            }
 
             this.style.display = "none";
-            const saveIcon = this.parentNode.querySelector(".save-icon");
-            saveIcon.style.display = "inline-block";
+            row.querySelector(".save-icon").style.display = "inline-block";
         });
     });
 
-    const saveIcons = document.querySelectorAll(".save-icon");
     saveIcons.forEach(icon => {
         icon.addEventListener("click", function () {
-            const row = this.parentNode.parentNode;
+            const row = this.closest("tr");
             const cells = row.querySelectorAll("td");
-            cells.forEach((cell, index) => {
-                if (index !== cells.length - 1) {
-                    const input = cell.querySelector("input");
-                    if (input) {
-                        cell.textContent = input.value;
-                    }
+
+            const id = cells[0].textContent;
+            const title = cells[1].querySelector("input").value;
+            const desc = cells[2].querySelector("input").value;
+            const date = cells[3].querySelector("input").value;
+
+            fetch('../php/updateAnnounce.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'update',
+                    announcementID: id,
+                    ann_title: title,
+                    ann_description: desc,
+                    event_date: date
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    cells[1].textContent = title;
+                    cells[2].textContent = desc;
+                    cells[3].textContent = date;
+
+                    this.style.display = "none";
+                    row.querySelector(".edit-icon").style.display = "inline-block";
+                } else {
+                    alert("Update failed: " + data.error);
                 }
             });
-
-            this.style.display = "none";
-            const editIcon = this.parentNode.querySelector(".edit-icon");
-            editIcon.style.display = "inline-block";
         });
     });
 });
