@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--boxicons-->
     <link rel="stylesheet" href="./adminProfile.css">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
     <title>Profile Settings</title>
 </head>
 
@@ -88,7 +89,6 @@
             </div>
             <div class="wrapper">
                 <div class="container">
-
                     <img src="../image/profile-admin.jpg" alt="Profile Image" class="profile-image">
 
                     <form action="#" method="post" enctype="multipart/form-data">

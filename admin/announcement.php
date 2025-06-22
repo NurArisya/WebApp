@@ -1,10 +1,29 @@
 <?php
 include('../php/db_conn.php');
 
+
+
+// Handle form submission (when save button clicked)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
+    $id = $_POST['announcementID'];
+    $title = $_POST['eventTitle'];
+    $desc = $_POST['eventDescription'];
+    $date = $_POST['eventDate'];
+
+    $stmt = $conn->prepare("UPDATE announcement SET ann_title = ?, ann_description = ?, event_date = ? WHERE announcementID = ?");
+    $stmt->bind_param("sssi", $title, $desc, $date, $id);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Announcement updated successfully');</script>";
+    } else {
+        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+    }
+}
+
 $select1 = "SELECT * FROM announcement";
 $result = $conn->query($select1)
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -17,6 +36,7 @@ $result = $conn->query($select1)
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--boxicons-->
     <link rel="stylesheet" href="./adminStyling.css">
     <link rel="stylesheet" href="./announce.css">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 
     <title>Announcement</title>
 </head>
@@ -97,6 +117,9 @@ $result = $conn->query($select1)
 
         <div class="edit-event-modal" id="editModal">
             <form name="editEventForm" id="editEventForm" method="POST" action="">
+
+            <input type="hidden" name="announcementID" id="announcementID">
+
                 <div class="modal-header">
                     <h2>Edit Announcement</h2>
                     <span class="close-btn" id="closeEditBtn">&times;</span>
@@ -155,7 +178,7 @@ $result = $conn->query($select1)
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='6'>No feedback found</td></tr>";
+                        echo "<tr><td colspan='6'>No announcement found</td></tr>";
                     }
                     ?>
                 </tbody>
