@@ -1,3 +1,10 @@
+<?php
+include("../php/db_conn.php");
+
+$sql = "SELECT * FROM announcement";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,21 +13,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="./admin.css">
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="icon" type="image/png" href="../img/spotlit-tab-logo.png">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
     <title>MMU TALENT</title>
 </head>
 
 <body>
-    <!--Navigation items-->
     <nav class="sidebar">
         <header>
             <div class="image-text">
                 <span class="image">
-                    <img src="../img/spotlit-logo.png" alt="logo">
+                    <img src="../image/spotlit-logo.png" alt="logo">
                 </span>
 
                 <div class="text header-text">
@@ -40,13 +46,13 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="adminProfile.php">
                             <i class='bx bxs-pencil icon'></i>
                             <span class="text nav-text">Profile</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="adminTalent.php">
                             <i class='bx bxs-group icon'></i>
                             <span class="text nav-text">Talent Profile</span>
                         </a>
@@ -83,11 +89,11 @@
         </div>
     </nav>
 
-    <div class="content"> <!--dashboard content-->
+    <div class="content"> 
         <div class="slider">
             <div class="slides">
-                <img src="../img/slideshow.png" alt="Event #1">
-                <img src="../img/slideshow1.png" alt="Event #2">
+                <img src="../image/slideshow.png" alt="Event #1">
+                <img src="../image/slideshow1.png" alt="Event #2">
             </div>
             <button class="prev" onclick="prevSlide()">
                 <i class='bx bxs-chevron-left'></i>
@@ -97,64 +103,35 @@
             </button>
         </div>
 
-        <div class="event-container">
-            <h3 class="announcement-title">Announcement</h3>
-            <div class="event">
-                <div class="event-left">
-                    <div class="event-info">
-                        <div class="event-name">Tech Fair</div>
-                        <div class="date-posted">24 May 2025</div>
-                    </div>
-                </div>
+            <div class="event-container">
+                <h3 class="announcement-title">Announcement</h3>
 
-                <div class="event-right">
-                    <div class="event-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus provident aliquam!
-                    </div>
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<div class="event">';
+                            echo '<div class="event-left">';
+                                echo '<div class="event-info">';
+                                    echo '<div class="event-name">' . $row["ann_title"] . '</div>';
+                                    echo '<div class="date-posted">' . $row["event_date"] . '</div>';
+                                echo '</div>';
+                            echo '</div>';
 
-                </div>
-
+                            echo '<div class="event-right">';
+                                echo '<div class="event-description">' . $row["ann_description"] . '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>No announcements found.</p>';
+                }
+                ?>
             </div>
-
-            <div class="event">
-                <div class="event-left">
-                    <div class="event-info">
-                        <div class="event-name">Tech Fair</div>
-                        <div class="date-posted">24 May 2025</div>
-                    </div>
-                </div>
-
-                <div class="event-right">
-                    <div class="event-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus provident aliquam!
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="event">
-                <div class="event-left">
-                    <div class="event-info">
-                        <div class="event-name">Tech Fair</div>
-                        <div class="date-posted">24 May 2025</div>
-                    </div>
-                </div>
-
-                <div class="event-right">
-                    <div class="event-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus provident aliquam!
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
 
     </div>
 
     <script src="../js/admin.js"></script>
+
 </body>
 
 </html>
