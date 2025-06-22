@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 .about-container {
-  max-width: 900px;
+  max-width: 85%;
   margin: 60px auto;
+  margin-bottom: 0px;
   padding: 0 20px;
   font-family: 'Poppins', sans-serif;
   line-height: 1.8;
@@ -22,6 +25,7 @@
 
 .about-container p {
   font-size: 1rem;
+  text-justify:center;
 }
 
 .about-container a {
@@ -40,4 +44,36 @@
   background-color: #f8f8f8;
   font-size: 0.9rem;
   color: #666;
+}
+
+table {
+  width: 85%;
+  border-collapse: collapse;
+  margin: 40px auto;
+  font-size: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #6b3fc9;
+  color: #fff;
+  font-weight: 600;
+}
+
+tr {
+  background-color: #f9f9f9;
+}
+
+img {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
 }
