@@ -1,11 +1,13 @@
 <?php include 'header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>FAQ - MMU Talent</title>
     <link rel="stylesheet" href="../css/faq.css">
 </head>
+
 <body>
 
     <h1>Frequently Asked Questions</h1>
@@ -31,7 +33,21 @@
             <p>You can contact us using the "Contact Us" form in the About Us section.</p>
         </div>
     </div>
+    <div class="feedback-form">
+        <h2>Have a Question or Feedback?</h2>
+        <form action="submit_feedback.php" method="POST">
+            <label for="name">Your Name</label>
+            <input type="text" name="name" required>
 
+            <label for="email">Your Email</label>
+            <input type="email" name="email" required>
 
+            <label for="message">Your Question or Comment</label>
+            <textarea name="message" required></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
 </body>
+
 </html>
