@@ -58,11 +58,9 @@ if (!empty($search)) {
 
 
         <?php if (isset($_SESSION['role']) && $_SESSION['role'] !== 'customer'): ?>
-          <!-- Only show Media if not a customer -->
+          <!-- Only show media if not a customer -->
           <li><a href="../php/media.php">Media</a></li>
         <?php endif; ?>
-
-
 
               <li><a href="../php/logout.php">Log Out</a></li>
             </ul>
