@@ -2,6 +2,12 @@
 include 'db_conn.php';
 session_start();
 
+$loggedIn = isset($_SESSION['userID']);
+$profileLink = '../php/talentProfile.php';
+
+if (isset($_SESSION['role']) && $_SESSION['role'] === 'customer') {
+    $profileLink = '../php/custProfile.php';
+}
 
 $search = $_GET['search'] ?? '';
 $result = null;
@@ -16,7 +22,6 @@ if (!empty($search)) {
     $result = $conn->query($sql);
 }
 
-$loggedIn = isset($_SESSION['userID']);
 ?>
 
 <!DOCTYPE html>
@@ -61,8 +66,16 @@ $loggedIn = isset($_SESSION['userID']);
           <li class="dropdown">
             <a href="#" class="dropbtn">Menu ▼</a>
             <ul class="dropdown-menu">
-              <li><a href="../php/talentProfile.php">Profile</a></li>
-              <li><a href="../php/media.php">Media</a></li>
+            <li><a href="<?= $profileLink ?>">My Profile</a></li>
+
+
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] !== 'customer'): ?>
+          <!-- Only show Media if not a customer -->
+          <li><a href="../php/media.php">Media</a></li>
+        <?php endif; ?>
+
+
+
               <li><a href="../php/logout.php">Log Out</a></li>
             </ul>
           </li>
