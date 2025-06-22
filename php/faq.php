@@ -1,11 +1,48 @@
-<?php include 'header.php'; ?>
+<?php
+include 'header.php';
+include 'db_conn.php';
+
+$successMsg = '';
+$errorMsg = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $message = $_POST['message'] ?? '';
+    $targetTalent = $_POST['talent'] ?? '';
+    $feedbackDate = date('Y-m-d');
+
+    if (!empty($message)) {
+        $stmt = $conn->prepare("INSERT INTO feedback (feedback_desc, target_talent, feedback_date) VALUES (?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("sss", $message, $targetTalent, $feedbackDate);
+            if ($stmt->execute()) {
+                $_SESSION['successMsg'] = "Thank you for your feedback!";
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit();
+            } else {
+                $errorMsg = "Failed to submit feedback.";
+            }
+            $stmt->close();
+        } else {
+            $errorMsg = "Database error.";
+        }
+    } else {
+        $errorMsg = "Message cannot be empty.";
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>FAQ - MMU Talent</title>
+    <title>MMU TALENT</title>
     <link rel="stylesheet" href="../css/faq.css">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 </head>
 
 <body>
@@ -33,14 +70,22 @@
             <p>You can contact us using the "Contact Us" form in the About Us section.</p>
         </div>
     </div>
+
     <div class="feedback-form">
         <h2>Have a Question or Feedback?</h2>
-        <form action="submit_feedback.php" method="POST">
+
+        <?php if (!empty($successMsg)) echo "<p class='success-msg'>$successMsg</p>"; ?>
+        <?php if (!empty($errorMsg)) echo "<p class='error-msg'>$errorMsg</p>"; ?>
+
+        <form action="" method="POST">
             <label for="name">Your Name</label>
             <input type="text" name="name" required>
 
             <label for="email">Your Email</label>
             <input type="email" name="email" required>
+
+            <label for="talent">Talent Name (Optional)</label>
+            <input type="text" name="talent">
 
             <label for="message">Your Question or Comment</label>
             <textarea name="message" required></textarea>
@@ -48,6 +93,6 @@
             <button type="submit">Submit Feedback</button>
         </form>
     </div>
-</body>
 
+</body>
 </html>
