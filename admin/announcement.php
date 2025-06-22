@@ -48,6 +48,7 @@ $result = $conn->query($select1);
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--boxicons-->
     <link rel="stylesheet" href="./adminStyling.css">
     <link rel="stylesheet" href="./announce.css">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 
     <title>Announcement</title>
 </head>
