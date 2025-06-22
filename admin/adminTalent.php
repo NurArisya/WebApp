@@ -1,7 +1,79 @@
 <?php
 include('../php/db_conn.php');
+session_start();
 
-// Join talentprofile with users to get first_name, last_name, email, etc.
+$firstName = "";
+$lastName = "";
+$email = "";
+$password = "";
+$nickname = "";
+$phone = "";
+$gender = "";
+$education = "";
+$talent = "";
+$errorMessage = "";
+$successMessage = "";
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $firstName = $_POST["firstName"];
+    $lastName = $_POST["lastName"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $nickname = $_POST["nickname"];
+    $phone = $_POST["phone"];
+    $gender = $_POST["gender"];
+    $education = $_POST["education"];
+    $talent = $_POST["talent"];
+
+    do {
+        // Basic validation
+        if (
+            empty($firstName) || empty($lastName) || empty($email) || empty($password)
+            || empty($nickname) || empty($phone) || empty($gender)
+        ) {
+            $errorMessage = "All required fields must be filled.";
+            break;
+        }
+
+        // Insert into `users` table
+        $insertUser = "INSERT INTO users (first_name, last_name, email, password) VALUES
+                    ('$firstName', '$lastName', '$email', '$password')";
+        $userResult = $conn->query($insertUser);
+
+        if (!$userResult) {
+            $errorMessage = "Error inserting user: " . $conn->error;
+            break;
+        }
+
+        // Get last inserted user ID
+        $userID = $conn->insert_id;
+
+        // Insert into `talentprofile` table
+        $insertTalent = "INSERT INTO talentprofile (userID, nickname, phone, gender, education, talent)
+                        VALUES ('$userID', '$nickname', '$phone', '$gender', '$education', '$talent')";
+        $talentResult = $conn->query($insertTalent);
+
+        if (!$talentResult) {
+            $errorMessage = "Error inserting talent profile: " . $conn->error;
+            break;
+        }
+
+        // Reset form fields after success
+        $firstName = "";
+        $lastName = "";
+        $email = "";
+        $password = "";
+        $nickname = "";
+        $phone = "";
+        $gender = "";
+        $education = "";
+        $talent = "";
+        $successMessage = "New talent profile added successfully.";
+    } while (false);
+}
+
+// Fetch all talent profiles
 $select1 = "
     SELECT tp.*, u.first_name, u.last_name, u.email, u.password
     FROM talentprofile tp
@@ -18,9 +90,9 @@ $result = $conn->query($select1);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="adminStyling.css">
-    <link rel="stylesheet" href="talentProfile.css">
-        <link rel="stylesheet" href="adminTalent.css">
+    <link rel="stylesheet" href="./adminStyling.css">
+    <link rel="stylesheet" href="../css/talentProfile.css">
+    <link rel="stylesheet" href="./adminTalent.css">
 
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -134,7 +206,7 @@ $result = $conn->query($select1);
 
                     <div class="form-group">
                         <label for="nickname">Nickname</label>
-                        <input type="text" name="nickname" value="Alicia">
+                        <input type="text" name="nickname" placeholder="Alicia" required>
                     </div>
 
                     <div class="form-group">
@@ -153,9 +225,11 @@ $result = $conn->query($select1);
                     <div class="form-group">
                         <label for="talent">Talent</label>
                         <select name="talent" required>
-                            <option value="Graphic" selected>Graphic</option>
-                            <option value="Writing">Writing</option>
-                            <option value="Music">Music</option>
+                            <option value="Music" selected>Music</option>
+                            <option value="Theather">Theather</option>
+                            <option value="Coding">Coding</option>
+                            <option value="Robotics">Robotics</option>
+
                         </select>
                     </div>
 
@@ -171,54 +245,54 @@ $result = $conn->query($select1);
             </form>
         </div>
 
-    <div class="table-container">
-        <table id="reviewTable">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Talent Nickname</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Education</th>
-                    <th>Talent</th>
-                    <th>Gender</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-----------fetch talent profile data from database---------!-->
-                <?php
-                if ($result->num_rows > 0) {
-                    $no = 1;
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $no++ . "</td>";
-                        echo "<td>" . htmlspecialchars($row['nickname']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['first_name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['last_name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['education']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['talent']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['password']) . "</td>"; // not recommended
-                        echo "<td>
+        <div class="table-container">
+            <table id="reviewTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Talent Nickname</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Education</th>
+                        <th>Talent</th>
+                        <th>Gender</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-----------fetch talent profile data from database---------!-->
+                    <?php
+                    if ($result->num_rows > 0) {
+                        $no = 1;
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $no++ . "</td>";
+                            echo "<td>" . htmlspecialchars($row['nickname']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['first_name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['last_name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['education']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['talent']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['password']) . "</td>";
+                            echo "<td>
                                 <i class='bx bxs-edit edit-icon'></i>
                                 <i class='bx bxs-trash delete-icon'></i>
                                 <i class='bx bxs-save save-icon' style='display: none;'></i>
                             </td>";
-                        echo "</tr>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='10'>No talent profiles found</td></tr>";
                     }
-                } else {
-                    echo "<tr><td colspan='10'>No talent profiles found</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="../js/talentProfile.js"></script>
