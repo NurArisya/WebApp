@@ -55,70 +55,71 @@ $result = $conn->query($sql);
 <head>
     <title>Community Discussion</title>
     <link rel="stylesheet" href="../css/community.css">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 </head>
 <body>
-<?php include 'header.php'; ?>
-<h2>Discussion</h2></br>
-<?php if ($userID): ?>
-    <div class="new-discussion-form">
-        <h3>Start a New Discussion</h3>
-        <form method="post">
-            <input type="hidden" name="new_discussion" value="1">
-            <input type="text" name="community_title" placeholder="Discussion Title" required>
-            <textarea name="community_content" placeholder="What's on your mind?" required></textarea>
-            <button type="submit">Post Discussion</button>
-        </form>
-    </div>
-<?php else: ?>
-    <p style="text-align:center;"><em>Please <a href="login.php">log in</a> to start a new discussion.</em></p>
-<?php endif; ?></br>
-
-<div class="discussion-wrapper">
-    <div class="discussion-list">
-        <?php while($row = $result->fetch_assoc()): ?>
-            <div class="discussion-card">
-                <div class="user-info">
-                    <span class="icon">💬</span>
-                    <div>
-                        <strong><?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?></strong><br>
-                        <small><?= htmlspecialchars($row['community_date']) ?></small>
-                    </div>
-                </div>
-                <h4><?= htmlspecialchars($row['community_title']) ?></h4>
-                <p><?= htmlspecialchars($row['community_content']) ?></p>
-
-                <!-- Fetch and show comments -->
-                <div class="comment-list">
-                    <?php
-                    $commID = $row['communityID'];
-                    $commentQuery = "
-                        SELECT com.comment_text, com.comment_date, u.first_name, u.last_name
-                        FROM comment com
-                        JOIN users u ON com.userID = u.userID
-                        WHERE com.communityID = $commID
-                        ORDER BY com.comment_date DESC
-                    ";
-
-                    $commentResult = $conn->query($commentQuery);
-                    while ($comment = $commentResult->fetch_assoc()):
-                    ?>
-                        <p><strong><?= htmlspecialchars($comment['first_name'] . ' ' . $comment['last_name']) ?>:</strong>
-                            <?= htmlspecialchars($comment['comment_text']) ?> 
-                            <small>(<?= htmlspecialchars($comment['comment_date']) ?>)</small>
-                        </p>
-                    <?php endwhile; ?>
-                </div>
-
-                <!-- Add commentss -->
-                <form method="post" class="comment-form">
-                    <input type="hidden" name="communityID" value="<?= $row['communityID'] ?>">
-                    <textarea name="comment_text" placeholder="Write a comment..." required></textarea>
-                    <button type="submit">Post Comment</button>
+    <?php include 'header.php'; ?>
+    <h2>Discussion</h2></br>
+        <?php if ($userID): ?>
+            <div class="new-discussion-form">
+                <h3>Start a New Discussion</h3>
+                <form method="post">
+                    <input type="hidden" name="new_discussion" value="1">
+                    <input type="text" name="community_title" placeholder="Discussion Title" required>
+                    <textarea name="community_content" placeholder="What's on your mind?" required></textarea>
+                    <button type="submit">Post Discussion</button>
                 </form>
             </div>
-        <?php endwhile; ?>
+        <?php else: ?>
+            <p style="text-align:center;"><em>Please <a href="login.php">log in</a> to start a new discussion.</em></p>
+        <?php endif; ?></br>
+
+    <div class="discussion-wrapper">
+        <div class="discussion-list">
+            <?php while($row = $result->fetch_assoc()): ?>
+                <div class="discussion-card">
+                    <div class="user-info">
+                        <span class="icon">💬</span>
+                        <div>
+                            <strong><?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?></strong><br>
+                            <small><?= htmlspecialchars($row['community_date']) ?></small>
+                        </div>
+                    </div>
+                    <h4><?= htmlspecialchars($row['community_title']) ?></h4>
+                    <p><?= htmlspecialchars($row['community_content']) ?></p>
+
+                    <!-- Fetch and show comments -->
+                    <div class="comment-list">
+                        <?php
+                        $commID = $row['communityID'];
+                        $commentQuery = "
+                            SELECT com.comment_text, com.comment_date, u.first_name, u.last_name
+                            FROM comment com
+                            JOIN users u ON com.userID = u.userID
+                            WHERE com.communityID = $commID
+                            ORDER BY com.comment_date DESC
+                        ";
+
+                        $commentResult = $conn->query($commentQuery);
+                        while ($comment = $commentResult->fetch_assoc()):
+                        ?>
+                            <p><strong><?= htmlspecialchars($comment['first_name'] . ' ' . $comment['last_name']) ?>:</strong>
+                                <?= htmlspecialchars($comment['comment_text']) ?> 
+                                <small>(<?= htmlspecialchars($comment['comment_date']) ?>)</small>
+                            </p>
+                        <?php endwhile; ?>
+                    </div>
+
+                    <!-- Add commentss -->
+                    <form method="post" class="comment-form">
+                        <input type="hidden" name="communityID" value="<?= $row['communityID'] ?>">
+                        <textarea name="comment_text" placeholder="Write a comment..." required></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
+                </div>
+            <?php endwhile; ?>
+        </div>
     </div>
-</div>
 
 </body>
 </html>

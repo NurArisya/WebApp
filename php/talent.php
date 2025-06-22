@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['api']) && $_GET['api'] === 'getTalents') {
     header('Content-Type: application/json');
-    include 'db_conn.php';
+    include '../php/db_conn.php';
 
     $sql = "SELECT tp.nickname AS name, tp.education, tp.talent, u.first_name, u.last_name, tp.profile_pic, tp.resume_file_path, tp.phone 
             FROM talentprofile tp 
@@ -36,27 +36,28 @@ if (isset($_GET['api']) && $_GET['api'] === 'getTalents') {
   <title>Talent</title>
   <link rel="stylesheet" href="../css/talent.css">
   <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 </head>
 
 <body>
-<?php include 'header.php'; ?>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search Talent"/>
-    <select id="genreSelect">
-      <option value="">Genre</option>
-      <option value="music">music</option>
-      <option value="theater">theater</option>
-      <option value="coding">coding</option>
-      <option value="robotics">robotics</option>
-    </select>
-  </div>
+  <?php include 'header.php'; ?>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search Talent"/>
+      <select id="genreSelect">
+        <option value="">Genre</option>
+        <option value="music">music</option>
+        <option value="theater">theater</option>
+        <option value="coding">coding</option>
+        <option value="robotics">robotics</option>
+      </select>
+    </div>
 
-  <div class="card-grid" id="talentGrid">
-    <!-- Cards inserted by talent.js -->
-  </div>
+    <div class="card-grid" id="talentGrid">
+      <!-- Cards inserted by talent.js -->
+    </div>
 
-  <script src="../js/talent.js"></script>
-  
+    <script src="../js/talent.js"></script>
+    
   
 </body>
 </html>

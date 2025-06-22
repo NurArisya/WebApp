@@ -6,6 +6,7 @@
   <title>About Us </title>
   <link rel="stylesheet" href="../css/dashboard.css">
   <link rel="stylesheet" href="../css/about.css">
+  <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 </head>
 <body>
 

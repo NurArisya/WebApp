@@ -10,12 +10,12 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="icon" type="image/png" href="../img/spotlit-tab-logo.png">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
     <title>MMU TALENT</title>
 </head>
 
 <body>
-    <?php include('./headerProfile.php'); ?>
+    <?php include('headerProfile.php'); ?>
 
     <h1>MMU Talent Feed</h1>
     <div class="feed" id="feed-container"></div>

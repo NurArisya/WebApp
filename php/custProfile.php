@@ -5,6 +5,7 @@
 <head>
   <title>Customer Profile</title>
   <link rel="stylesheet" href="../css/custProfile.css">
+  <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
 </head>
 
 <body>

@@ -24,7 +24,7 @@ if (!empty($search)) {
     
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="icon" type="image/png" href="../img/spotlit-tab-logo.png">
+    <link rel="icon" type="image/png" href="../image/spotlit-tab-logo.png">
     <title>MMU TALENT</title>
 </head>
 
@@ -38,7 +38,7 @@ if (!empty($search)) {
             <ul class="navlinks" id="nav-links">
                 <li><a href="../php/dashboard.php">Home</a></li>
                 <li><a href="../php/talent.php">Talent</a></li>
-                <li><a href="#">Events</a></li>
+                <!--<li><a href="#">Events</a></li> -->
                 <li><a href="../php/gallery.php">Gallery</a></li>
                 <li><a href="../php/community.php">Community Services</a></li>
                 <li class="dropdown">
@@ -59,70 +59,66 @@ if (!empty($search)) {
 
 
 
-        <div class="content">
-            <div class="slider">
-                <div class="slides">
-            <?php
-            mysqli_data_seek($result, 0);
-            while ($row = $result->fetch_assoc()) {
-            echo '
-            <div class="slide-box">
-                <img class="slide-image-top" src="' . htmlspecialchars($row['event_pic']) . '" alt="' . htmlspecialchars($row['event_title']) . '"/>
-                <div class="slide-caption-under">
-                    <h3>' . htmlspecialchars($row["event_title"]) . '</h3>
-                    <p>' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '</p>
+                <div class="content">
+                    <div class="slider">
+                        <div class="slides">
+                    <?php
+                    mysqli_data_seek($result, 0);
+                    while ($row = $result->fetch_assoc()) {
+                    echo '
+                    <div class="slide-box">
+                        <img class="slide-image-top" src="' . htmlspecialchars($row['event_pic']) . '" alt="' . htmlspecialchars($row['event_title']) . '"/>
+                        <div class="slide-caption-under">
+                            <h3>' . htmlspecialchars($row["event_title"]) . '</h3>
+                            <p>' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '</p>
+                        </div>
+                    </div>';
+                    }
+
+                    mysqli_data_seek($result, 0);
+                    ?>
                 </div>
-            </div>';
-        }
-
-            mysqli_data_seek($result, 0);
-            ?>
-        </div>
-
-
                 <button class="prev" onclick="prevSlide()">
                     <i class='bx bxs-chevron-left'></i>
                 </button>
                 <button class="next" onclick="nextSlide()">
                     <i class='bx bxs-chevron-right'></i>
                 </button>
-            </div>
-
-            <div class="event-container">
-        <h3>Upcoming Events</h3>
-        <?php
-    
-        function limitSentences($text, $limit = 1) {
-            $sentences = preg_split('/(?<=[.?!])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
-            return implode(' ', array_slice($sentences, 0, $limit));
-        }
-
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo '
-                    <div class="event">
-                        <div class="event-left">
-                            <div class="event-info">
-                                <div class="event-name"><b>' . htmlspecialchars($row["event_title"]) . '</b></div>
-                                <div class="date-posted">' . htmlspecialchars($row["event_date"]) . '</div>
-                            </div>
-                        </div>
-                        <div class="event-right">
-                            <div class="event-description">
-                                ' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '
-                            </div>
-                        </div>
-                    </div>';
-                }
-            } else {
-                echo '<p>No events found.</p>';
-            }
-
-            $conn->close();
-            ?>
         </div>
 
+            <div class="event-container">
+                <h3>Upcoming Events</h3>
+                <?php
+            
+                function limitSentences($text, $limit = 1) {
+                    $sentences = preg_split('/(?<=[.?!])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+                    return implode(' ', array_slice($sentences, 0, $limit));
+                }
 
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo '
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-info">
+                                        <div class="event-name"><b>' . htmlspecialchars($row["event_title"]) . '</b></div>
+                                        <div class="date-posted">' . htmlspecialchars($row["event_date"]) . '</div>
+                                    </div>
+                                </div>
+                                <div class="event-right">
+                                    <div class="event-description">
+                                        ' . htmlspecialchars(limitSentences($row["event_desc"], 1)) . '
+                                    </div>
+                                </div>
+                            </div>';
+                        }
+                    } else {
+                        echo '<p>No events found.</p>';
+                    }
+
+                    $conn->close();
+                    ?>
+                </div>
         </div>
     </nav>
     <script src="../js/dashboard.js"></script>
